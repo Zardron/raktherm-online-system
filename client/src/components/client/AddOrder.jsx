@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button, Modal } from "flowbite-react";
 import { BsExclamationOctagon } from "react-icons/bs";
 import ConfirmationMessage from "../ConfirmationMessage";
+import OrderList from "./ppr/OrderList";
 
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
@@ -88,10 +89,13 @@ const AddOrder = ({ userData, status, setStatus }) => {
           <hr className="mb-4" />
           <h1 className="text-2xl mb-4">Pipes</h1>
           <Pipes />
-
-          <hr className="my-6" />
-
+          <hr className="my-5" />
           <h1 className="text-2xl mb-4">Sockets</h1>
+          <Pipes />
+          <hr className="my-6" />
+          <div className="mb-4">
+            <OrderList />
+          </div>
         </div>
       </div>
 
