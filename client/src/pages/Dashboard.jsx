@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar.jsx";
 import Content from "../components/Content.jsx";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Dashboard = ({ show, setShow }) => {
   const [userData, setUserData] = useState([]);
+  const [status, setStatus] = useState("");
+
+  const handleStatus = () => {
+    axios
+      .get(`http://localhost:5000/api/orders/${userData?.userId}`)
+      .then((res) => setStatus(res?.data?.status));
+  };
 
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem("userDetails")));
   }, []);
 
-  console.log(userData);
-
   const [page, setPage] = useState("customers");
 
-  const props = { show, setShow, setPage, userData };
+  const props = { show, setShow, setPage, userData, status, setStatus };
 
   return (
     <div className="w-full h-screen">
@@ -22,7 +27,12 @@ const Dashboard = ({ show, setShow }) => {
         <div
           className={`${show ? "w-[500px]" : "w-0"} ease-in-out duration-300`}
         >
-          <SideBar {...props} page={page} setPage={setPage} />
+          <SideBar
+            {...props}
+            page={page}
+            setPage={setPage}
+            handleStatus={handleStatus}
+          />
         </div>
 
         <div className="w-full">

@@ -2,13 +2,19 @@ import { Button, Modal } from "flowbite-react";
 import { BsExclamationOctagon } from "react-icons/bs";
 
 const ConfirmationMessage = ({
-  openModal,
-  setOpenModal,
+  openMessage,
+  setOpenMessage,
   message,
-  setOrderForm,
+  userId,
+  handleCancelOrder,
 }) => {
   return (
-    <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+    <Modal
+      show={openMessage}
+      size="md"
+      onClose={() => setOpenMessage(false)}
+      popup
+    >
       <Modal.Header />
       <Modal.Body>
         <div className="text-center">
@@ -20,12 +26,12 @@ const ConfirmationMessage = ({
             <Button
               color="failure"
               onClick={() => {
-                setOpenModal(false), setOrderForm(false);
+                setOpenMessage(false), handleCancelOrder(userId);
               }}
             >
               {"Yes, I'm sure"}
             </Button>
-            <Button color="gray" onClick={() => setOpenModal(false)}>
+            <Button color="gray" onClick={() => setOpenMessage(false)}>
               No, cancel
             </Button>
           </div>

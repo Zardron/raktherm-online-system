@@ -7,7 +7,7 @@ import { GrStatusInfo } from "react-icons/gr";
 import { LuUserPlus2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
-const SideBar = ({ page, setPage, handleOrder }) => {
+const SideBar = ({ page, setPage, handleStatus }) => {
   const navigate = useNavigate();
   return (
     <div className={`relative h-screen shadow-md border-r overflow-hidden`}>
@@ -29,7 +29,7 @@ const SideBar = ({ page, setPage, handleOrder }) => {
                 page === "order" && "bg-gray-100"
               } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
               onClick={() => {
-                setPage("order"), handleOrder();
+                setPage("order"), handleStatus();
               }}
             >
               <FaRegListAlt /> Order

@@ -7,8 +7,8 @@ import OrderStatus from "./OrderStatus";
 import AddCustomer from "./AddCustomer";
 import AddOrder from "./client/AddOrder";
 
-const Content = ({ show, setShow, page, userData }) => {
-  const props = { show, setShow, page, userData };
+const Content = ({ show, setShow, page, userData, status, setStatus }) => {
+  const props = { show, setShow, page, userData, status, setStatus };
 
   const renderComponent = (component) => {
     switch (component) {
