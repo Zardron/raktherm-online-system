@@ -45,24 +45,28 @@ const Customers = () => {
             </Table.Head>
             <Table.Body className="divide-y">
               {customerData.map((data) => (
-                <Table.Row
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  key={data.customerCode}
-                >
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {data.customerCode}
-                  </Table.Cell>
-                  <Table.Cell> {data.customerName}</Table.Cell>
-                  <Table.Cell> {data.location}</Table.Cell>
-                  <Table.Cell>
-                    {" "}
-                    {data.account.map((acc) => acc.email)}
-                  </Table.Cell>
-                  <Table.Cell> {data.contact}</Table.Cell>
-                  <Table.Cell className="flex items-center gap-2 text-blue-500 cursor-pointer">
-                    <FaRegEdit /> Update
-                  </Table.Cell>
-                </Table.Row>
+                <>
+                  {data.customerCode !== "ADMIN143" && (
+                    <Table.Row
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      key={data.customerCode}
+                    >
+                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                        {data.customerCode}
+                      </Table.Cell>
+                      <Table.Cell> {data.customerName}</Table.Cell>
+                      <Table.Cell> {data.location}</Table.Cell>
+                      <Table.Cell>
+                        {" "}
+                        {data.account.map((acc) => acc.email)}
+                      </Table.Cell>
+                      <Table.Cell> {data.contact}</Table.Cell>
+                      <Table.Cell className="flex items-center gap-2 text-blue-500 cursor-pointer">
+                        <FaRegEdit /> Update
+                      </Table.Cell>
+                    </Table.Row>
+                  )}
+                </>
               ))}
             </Table.Body>
           </Table>

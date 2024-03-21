@@ -8,7 +8,7 @@ const getCustomers = async (req, res) => {
         from: "auths",
         localField: "_id",
         foreignField: "user",
-        pipeline: [{ $project: { _id: 0, email: 1 } }],
+        pipeline: [{ $project: { _id: 0, email: 1, userType: 1 } }],
         as: "account",
       },
     },

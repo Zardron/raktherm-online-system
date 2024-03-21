@@ -7,7 +7,8 @@ import { GrStatusInfo } from "react-icons/gr";
 import { LuUserPlus2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
-const SideBar = ({ page, setPage, handleStatus }) => {
+const SideBar = ({ page, setPage, handleStatus, userData }) => {
+  const { userType } = userData;
   const navigate = useNavigate();
   return (
     <div className={`relative h-screen shadow-md border-r overflow-hidden`}>
@@ -16,59 +17,87 @@ const SideBar = ({ page, setPage, handleStatus }) => {
           <img src={LOGO} alt="logo" className="h-32 mb-4 m-4" />
 
           <div className="p-2">
-            <div
-              className={`${
-                page === "customers" && "bg-gray-100"
-              } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
-              onClick={() => setPage("customers")}
-            >
-              <LiaUsersSolid /> Customers
-            </div>
-            <div
-              className={`${
-                page === "order" && "bg-gray-100"
-              } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
-              onClick={() => {
-                setPage("order"), handleStatus();
-              }}
-            >
-              <FaRegListAlt /> Order
-            </div>
-            <div
-              className={`${
-                page === "orders" && "bg-gray-100"
-              } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
-              onClick={() => setPage("orders")}
-            >
-              <FaRegListAlt /> Orders
-            </div>
-            <div
-              className={`${
-                page === "order-status" && "bg-gray-100"
-              } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
-              onClick={() => setPage("order-status")}
-            >
-              <GrStatusInfo /> Order Status
-            </div>
+            {userType === "Admin" && (
+              <div
+                className={`${
+                  page === "customers" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => setPage("customers")}
+              >
+                <LiaUsersSolid /> Customers
+              </div>
+            )}
+
+            {userType === "Customer" && (
+              <div
+                className={`${
+                  page === "my-orders" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => {
+                  setPage("my-orders"), handleStatus();
+                }}
+              >
+                <FaRegListAlt /> My Orders
+              </div>
+            )}
+            {userType === "Customer" && (
+              <div
+                className={`${
+                  page === "order" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => {
+                  setPage("order"), handleStatus();
+                }}
+              >
+                <FaRegListAlt /> Create Order
+              </div>
+            )}
+            {userType === "Admin" && (
+              <div
+                className={`${
+                  page === "orders" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => setPage("orders")}
+              >
+                <FaRegListAlt /> Orders
+              </div>
+            )}
+
+            {userType === "Admin" && (
+              <div
+                className={`${
+                  page === "order-status" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => setPage("order-status")}
+              >
+                <GrStatusInfo /> Order Status
+              </div>
+            )}
           </div>
         </div>
 
         <div className="w-full px-2 border-t border-gray-300">
           <div className="py-2">
-            <div
-              className={`${
-                page === "add-customer" && "bg-gray-100"
-              } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
-              onClick={() => setPage("add-customer")}
-            >
-              <LuUserPlus2 /> Add Customer
-            </div>
+            {userType === "Admin" && (
+              <div
+                className={`${
+                  page === "add-customer" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => setPage("add-customer")}
+              >
+                <LuUserPlus2 /> Add Customer
+              </div>
+            )}
+
             {/* <div className="flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer">
               <FaMoon /> Dark
             </div> */}
-            <div className="flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer">
-              <TbReportAnalytics /> Report
-            </div>
+            {userType === "Admin" && (
+              <div className="flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer">
+                <TbReportAnalytics /> Report
+              </div>
+            )}
+
             <div
               className="flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer"
               onClick={() => {

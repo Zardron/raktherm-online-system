@@ -6,9 +6,18 @@ import Orders from "./Orders";
 import OrderStatus from "./OrderStatus";
 import AddCustomer from "./AddCustomer";
 import AddOrder from "./client/AddOrder";
+import MyOrders from "./client/MyOrders";
 
-const Content = ({ show, setShow, page, userData, status, setStatus }) => {
-  const props = { show, setShow, page, userData, status, setStatus };
+const Content = ({
+  show,
+  setShow,
+  page,
+  userData,
+  status,
+  setStatus,
+  setPage,
+}) => {
+  const props = { show, setShow, page, userData, status, setStatus, setPage };
 
   const renderComponent = (component) => {
     switch (component) {
@@ -17,6 +26,9 @@ const Content = ({ show, setShow, page, userData, status, setStatus }) => {
 
       case "order":
         return <AddOrder {...props} />;
+
+      case "my-orders":
+        return <MyOrders {...props} />;
 
       case "orders":
         return <Orders {...props} />;
