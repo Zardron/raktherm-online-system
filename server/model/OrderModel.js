@@ -10,7 +10,25 @@ const orderSchema = new mongoose.Schema(
     orderNo: {
       type: String,
     },
-    orders: [],
+    orders: [
+      {
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+        itemName: {
+          type: String,
+        },
+        itemCode: {
+          type: String,
+        },
+        quantity: {
+          type: String,
+        },
+        oem: {
+          type: String,
+        },
+      },
+    ],
     status: {
       type: String,
       default: "Unfinished",

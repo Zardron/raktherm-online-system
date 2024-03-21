@@ -38,3 +38,48 @@ export const getOrderDetails = async (req, res) => {
 
   res.status(200).json(checkOrder);
 };
+
+export const addOrder = async (req, res) => {
+  const { id } = req.params;
+  const { itemCode, itemName, quantity, oem } = req.body;
+
+  const updateOrder = await Order.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        orders: {
+          itemName: itemName,
+          itemCode: itemCode,
+          quantity: quantity,
+          oem: oem,
+        },
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json(updateOrder);
+};
+
+export const removeSpecificOrder = async (req, res) => {
+  const { id } = req.params;
+  const { itemId } = req.body;
+
+  const updateOrder = await Order.findByIdAndUpdate(
+    id,
+    {
+      $pull: {
+        orders: {
+          _id: itemId,
+        },
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json(updateOrder);
+};

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Button, Modal } from "flowbite-react";
 import { BsExclamationOctagon } from "react-icons/bs";
 
@@ -6,8 +7,22 @@ const ConfirmationMessage = ({
   setOpenMessage,
   message,
   userId,
-  handleCancelOrder,
+  setStatus,
+  setOrderForm,
+  generateNewOr,
+  setOrderData,
+  setOrderId,
 }) => {
+  const handleCancel = (id) => {
+    axios.delete(`http://localhost:5000/api/orders/${id}`);
+    setStatus("");
+    setOrderForm(false);
+    generateNewOr();
+    setOrderData("");
+    setOrderId("");
+    setOpenMessage(false);
+  };
+
   return (
     <Modal
       show={openMessage}
@@ -23,12 +38,7 @@ const ConfirmationMessage = ({
             {message}
           </h3>
           <div className="flex justify-center gap-4">
-            <Button
-              color="failure"
-              onClick={() => {
-                setOpenMessage(false), handleCancelOrder(userId);
-              }}
-            >
+            <Button color="failure" onClick={() => handleCancel(userId)}>
               {"Yes, I'm sure"}
             </Button>
             <Button color="gray" onClick={() => setOpenMessage(false)}>
