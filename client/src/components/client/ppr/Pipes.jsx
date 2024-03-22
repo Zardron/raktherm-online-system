@@ -1,8 +1,9 @@
 import { Select, TextInput } from "flowbite-react";
-import React, { useState } from "react";
-import { PPR_PIPES } from "../data";
+import React, { useEffect, useState } from "react";
+import { PPR_PIPES, PPR_PIPES_OPTIONS } from "../data";
 import axios from "axios";
 import { toast } from "react-toastify";
+import SearchableDropdown from "../SearchableDropdown";
 
 const Pipes = ({ orderId, setOrderData }) => {
   const [data, setData] = useState({
@@ -19,10 +20,6 @@ const Pipes = ({ orderId, setOrderData }) => {
     setData({ ...data, [e.target.id]: e.target.value });
   };
 
-  const clearData = () => {
-    setData({ ...data, itemName: "", itemCode: "", quantity: "" });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,9 +30,21 @@ const Pipes = ({ orderId, setOrderData }) => {
         quantity: quantity,
         oem: "Meters",
       })
-      .then(
-        (res) => setOrderData(res?.data?.orders),
-        toast.success("Item has been added", {
+      .then((res) => {
+        setOrderData(res?.data?.orders),
+          toast.success("Item has been added", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
+      })
+      .catch((err) =>
+        toast.error(err?.response?.data?.message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -44,10 +53,17 @@ const Pipes = ({ orderId, setOrderData }) => {
           draggable: false,
           progress: undefined,
           theme: "colored",
-        }),
-        clearData()
+        })
       );
   };
+
+  const [itemCodeOption, setItemCodeOption] = useState([]);
+
+  useEffect(() => {
+    setItemCodeOption(filter[0]?.items);
+  }, [itemName]);
+
+  console.log(itemCodeOption);
 
   return (
     <>
@@ -55,7 +71,15 @@ const Pipes = ({ orderId, setOrderData }) => {
         onSubmit={handleSubmit}
         className="flex items-center justify-center gap-4 mb-3"
       >
-        <Select
+        <SearchableDropdown
+          options={PPR_PIPES_OPTIONS}
+          label="name"
+          id="itemName"
+          selectedVal={itemName}
+          handleChange={(val) => setData({ ...data, itemName: val })}
+        />
+
+        {/* <Select
           id="itemName"
           className="w-full"
           required
@@ -69,7 +93,7 @@ const Pipes = ({ orderId, setOrderData }) => {
               </option>
             </>
           ))}
-        </Select>
+        </Select> */}
         <Select
           id="itemCode"
           className="w-full"

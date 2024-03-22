@@ -1,3 +1,31 @@
+export const PPR_PIPES_OPTIONS = [
+  {
+    name: "PN 10 Solid PP-R Pipes",
+    value: "PN 10 Solid PP-R Pipes",
+  },
+  {
+    name: "PN 16 Solid PP-R Pipes",
+  },
+  {
+    name: "PN 20 Solid PP-R Pipes",
+  },
+  {
+    name: "PN 25 Solid PP-R Pipes",
+  },
+  {
+    name: "PN 20 Stabi PP-R Pipes",
+  },
+  {
+    name: "PN 25 Stabi PP-R Pipes",
+  },
+  {
+    name: "PN 20 Stabi PP-R Pipes (UV Protection)",
+  },
+  {
+    name: "PN 25 Stabi PP-R Pipes (UV Protection)",
+  },
+];
+
 export const PPR_PIPES = [
   {
     name: "PN 10 Solid PP-R Pipes",
@@ -129,14 +157,130 @@ export const PPR_PIPES = [
   },
   {
     name: "PN 20 Stabi PP-R Pipes",
+    items: [
+      {
+        itemCode: "PPS20-20",
+      },
+      {
+        itemCode: "PPS20-25",
+      },
+      {
+        itemCode: "PPS20-32",
+      },
+      {
+        itemCode: "PPS20-40",
+      },
+      {
+        itemCode: "PPS20-50",
+      },
+      {
+        itemCode: "PPS20-63",
+      },
+      {
+        itemCode: "PPS20-75",
+      },
+      {
+        itemCode: "PPS20-90",
+      },
+      {
+        itemCode: "PPS20-110",
+      },
+    ],
   },
   {
     name: "PN 25 Stabi PP-R Pipes",
+    items: [
+      {
+        itemCode: "PPS25-20",
+      },
+      {
+        itemCode: "PPS25-25",
+      },
+      {
+        itemCode: "PPS25-32",
+      },
+      {
+        itemCode: "PPS25-40",
+      },
+      {
+        itemCode: "PPS25-50",
+      },
+      {
+        itemCode: "PPS25-63",
+      },
+      {
+        itemCode: "PPS25-75",
+      },
+      {
+        itemCode: "PPS25-90",
+      },
+      {
+        itemCode: "PPS25-110",
+      },
+    ],
   },
   {
     name: "PN 20 Stabi PP-R Pipes (UV Protection)",
+    items: [
+      {
+        itemCode: "PPSUV20-20",
+      },
+      {
+        itemCode: "PPSUV20-25",
+      },
+      {
+        itemCode: "PPSUV20-32",
+      },
+      {
+        itemCode: "PPSUV20-40",
+      },
+      {
+        itemCode: "PPSUV20-50",
+      },
+      {
+        itemCode: "PPSUV20-63",
+      },
+      {
+        itemCode: "PPSUV20-75",
+      },
+      {
+        itemCode: "PPSUV20-90",
+      },
+      {
+        itemCode: "PPSUV20-110",
+      },
+    ],
   },
   {
     name: "PN 25 Stabi PP-R Pipes (UV Protection)",
+    items: [
+      {
+        itemCode: "PPSUV25-20",
+      },
+      {
+        itemCode: "PPSUV25-25",
+      },
+      {
+        itemCode: "PPSUV25-32",
+      },
+      {
+        itemCode: "PPSUV25-40",
+      },
+      {
+        itemCode: "PPSUV25-50",
+      },
+      {
+        itemCode: "PPSUV25-63",
+      },
+      {
+        itemCode: "PPSUV25-75",
+      },
+      {
+        itemCode: "PPSUV25-90",
+      },
+      {
+        itemCode: "PPSUV25-110",
+      },
+    ],
   },
 ];

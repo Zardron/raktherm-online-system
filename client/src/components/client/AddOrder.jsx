@@ -7,6 +7,8 @@ import ConfirmationMessage from "../ConfirmationMessage";
 import OrderList from "./ppr/OrderList";
 import Fittings from "./ppr/Fittings";
 
+import "react-select-search/style.css";
+
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
   const [data, setData] = useState([]);
@@ -84,9 +86,8 @@ const AddOrder = ({ userData, status, setStatus }) => {
 
   return (
     <div className="w-full">
-      <h1 className="text-4xl font-bold">Order</h1>
-
       <div className="flex items-center justify-between mb-4">
+        <h1 className="text-4xl font-bold">Order</h1>
         <h1
           className="text-xl bg-green-200 text-white px-4 py-2 mt-2 rounded-md shadow-md cursor-pointer hover:bg-green-400"
           onClick={handleOrder}
