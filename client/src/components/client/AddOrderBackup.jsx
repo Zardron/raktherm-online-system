@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import { IoCreateOutline } from "react-icons/io5";
-import { MdCancel } from "react-icons/md";
-import OrderList from "./OrderList";
+import React, { useEffect, useState } from "react";
+import Pipes from "./ppr/Pipes";
 import axios from "axios";
 import { Button, Modal } from "flowbite-react";
 import { BsExclamationOctagon } from "react-icons/bs";
 import ConfirmationMessage from "../ConfirmationMessage";
+import OrderList from "./OrderList";
+import Fittings from "./ppr/Fittings";
+
+import "react-select-search/style.css";
 
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
+  const [data, setData] = useState([]);
+  const [openModal, setOpenModal] = useState(true);
+  const [openMessage, setOpenMessage] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const [orderId, setOrderId] = useState("");
+
+  // Create Order No.
   const [orderNo, setOrderNo] = useState(
     "OR" +
       new Date().getFullYear() +
@@ -18,7 +25,6 @@ const AddOrder = ({ userData, status, setStatus }) => {
   );
   const [orderForm, setOrderForm] = useState(false);
 
-  // Generate New OR #
   const generateNewOr = () => {
     setOrderNo(
       "OR" +
@@ -28,7 +34,7 @@ const AddOrder = ({ userData, status, setStatus }) => {
   };
 
   // Create / Get Order Details
-  const handleCreateOrder = () => {
+  const handleOrder = () => {
     setOrderForm(true);
     setOrderData("");
 
@@ -38,9 +44,10 @@ const AddOrder = ({ userData, status, setStatus }) => {
         orderNo,
       })
       .then((res) => {
-        setOrderNo(res?.data?.orderNo),
-          setOrderData(res?.data?.orders),
-          setOrderId(res?.data?._id);
+        setData(res?.data),
+          setOrderNo(res?.data?.orderNo),
+          setOrderData(res?.data?.orders);
+        setOrderId(res?.data?._id);
       })
       .catch((err) => console.log(err));
   };
@@ -55,11 +62,13 @@ const AddOrder = ({ userData, status, setStatus }) => {
     setOrderId("");
   };
 
-  // Modal Properties
-  const [openModal, setOpenModal] = useState(true);
-  const [openMessage, setOpenMessage] = useState(false);
+  // Update Order Data
+  const updateOrderData = () => {
+    axios.get(`http://localhost:5000/api/orders/${userId}`).then((res) => {
+      setOrderData(res?.data?.orders);
+    });
+  };
 
-  // Props
   const props = {
     userId,
     openMessage,
@@ -73,25 +82,18 @@ const AddOrder = ({ userData, status, setStatus }) => {
     setOrderId,
   };
 
+  const orderProps = { userId, orderData, setOrderData, orderId, setOrderId };
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
+        <h1 className="text-4xl font-bold">Order</h1>
         <h1
-          className="flex items-center gap-1 text-base bg-green-500 text-white px-2 py-1 rounded-md border-2 border-white shadow-md cursor-pointer hover:bg-white hover:border-2 hover:border-green-500 hover:text-black"
-          onClick={handleCreateOrder}
+          className="text-xl bg-green-200 text-white px-4 py-2 mt-2 rounded-md shadow-md cursor-pointer hover:bg-green-400"
+          onClick={handleOrder}
         >
-          <IoCreateOutline size={20} className="mb-1" />
           Create New Order
         </h1>
-        {orderForm && (
-          <h1
-            className="flex items-center gap-1 text-base bg-red-500 text-white px-2 py-1 rounded-md border-2 border-white shadow-md cursor-pointer hover:bg-white hover:border-2 hover:border-red-500 hover:text-black"
-            onClick={() => setOpenMessage(true)}
-          >
-            <MdCancel size={20} />
-            Cancel Order
-          </h1>
-        )}
       </div>
 
       <div className="relative h-full w-full border shadow-md">
@@ -99,20 +101,26 @@ const AddOrder = ({ userData, status, setStatus }) => {
         <div className="p-4">
           <div className="flex flex-row items-center justify-between mb-4">
             <h1 className="text-2xl">Pipes</h1>
+            <h1
+              className="text-lg bg-red-300 py-1 px-2 text-white rounded-md cursor-pointer hover:bg-red-500"
+              onClick={() => setOpenMessage(true)}
+            >
+              Cancel Order
+            </h1>
           </div>
+          <Pipes {...orderProps} />
           <hr className="my-5" />
           <h1 className="text-2xl mb-4">Fittings</h1>
+          <Fittings />
           <hr className="my-6" />
           <div className="flex items-center justify-start mb-2">
             <h1 className="text-2xl">
               Order #: <span className="font-medium">{orderNo}</span>
             </h1>
           </div>
-          <OrderList
-            orderData={orderData}
-            orderId={orderId}
-            setOrderData={setOrderData}
-          />
+          <div className="mb-4">
+            <OrderList {...orderProps} />
+          </div>
         </div>
       </div>
 
@@ -129,24 +137,21 @@ const AddOrder = ({ userData, status, setStatus }) => {
           <Modal.Header />
           <Modal.Body>
             <div className="text-center">
-              <BsExclamationOctagon
-                color="orange"
-                className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200"
-              />
+              <BsExclamationOctagon className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
               <h3 className="mb-5 text-base font-normal text-gray-500 dark:text-gray-400">
                 You still have unfinished order wish to continue it?
               </h3>
               <div className="flex justify-center gap-4">
                 <Button
-                  color="success"
+                  color="failure"
                   onClick={() => {
-                    setOpenModal(false), handleCreateOrder();
+                    setOpenModal(false), handleOrder();
                   }}
                 >
                   {"Yes, I'll continue it."}
                 </Button>
                 <Button
-                  color="failure"
+                  color="gray"
                   onClick={() => {
                     setOpenModal(false), handleCancelOrder(userId);
                   }}
