@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TiDelete } from "react-icons/ti";
 import { toast } from "react-toastify";
 
@@ -25,6 +25,16 @@ const OrderList = ({ orderData, orderId, setOrderData }) => {
         }
       });
   };
+
+  const ref = useRef();
+  useEffect(() => {
+    if (orderData.length) {
+      ref.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [orderData.length]);
 
   return (
     <div className="w-full shadow-md border">
@@ -79,7 +89,10 @@ const OrderList = ({ orderData, orderId, setOrderData }) => {
         ) : (
           <>
             {orderData?.map((data) => (
-              <div className="flex flex-row text-sm border-b-gray-100 border-b hover:bg-gray-50">
+              <div
+                className="flex flex-row text-sm border-b-gray-100 border-b hover:bg-gray-50"
+                ref={ref}
+              >
                 {/* Item Name */}
                 <div className="w-full">
                   <div className="text-left py-3 px-6 font-medium text-[#111827]">

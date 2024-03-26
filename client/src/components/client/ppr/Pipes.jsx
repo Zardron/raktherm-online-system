@@ -7,6 +7,16 @@ import ItemCode from "./ItemCode";
 import ItemName from "./ItemName";
 
 const Pipes = ({ orderId, setOrderData }) => {
+  const [pprPipes, setPprPipes] = useState([]);
+
+  console.log(pprPipes);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/ppr-pipes")
+      .then((res) => setPprPipes(res?.data));
+  }, []);
+
   const [data, setData] = useState({
     itemName: "",
     itemCode: "",
@@ -73,7 +83,7 @@ const Pipes = ({ orderId, setOrderData }) => {
         className="flex items-center justify-center gap-4 mb-3"
       >
         <ItemName
-          options={PPR_PIPES_OPTIONS}
+          options={pprPipes}
           label="name"
           id="itemName"
           selectedVal={itemName}

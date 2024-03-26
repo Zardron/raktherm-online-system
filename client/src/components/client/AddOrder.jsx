@@ -11,6 +11,7 @@ import PEX from "./pex";
 import UPVC from "./upvc";
 import RAKDUCT from "./rakduct";
 import { BsBoxArrowInRight } from "react-icons/bs";
+import { PPR_FITTINGS, PPR_PIPES } from "./data";
 
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
@@ -28,8 +29,6 @@ const AddOrder = ({ userData, status, setStatus }) => {
     orderId,
     setOrderData,
   };
-
-  console.log(orderData);
 
   const renderComponent = (type) => {
     switch (type) {
@@ -105,6 +104,12 @@ const AddOrder = ({ userData, status, setStatus }) => {
     setOrderId,
   };
 
+  const handleClick = () => {
+    // axios
+    //   .post("http://localhost:5000/api/products/ppr-pipes", PPR_PIPES)
+    //   .then((res) => console.log(res));
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
@@ -172,7 +177,7 @@ const AddOrder = ({ userData, status, setStatus }) => {
               }`}
               onClick={() => setType("rakduct")}
             >
-              RAKDUCT
+              DUCT
             </div>
           </div>
 
@@ -183,7 +188,10 @@ const AddOrder = ({ userData, status, setStatus }) => {
               Order #: <span className="font-medium">{orderNo}</span>
             </h1>
 
-            <h1 className="cursor-pointer bg-green-500 text-white hover:bg-white hover:border-2 hover:border-green-500 hover:text-black flex items-center gap-1 text-base  px-2 py-1 rounded-md border-2 border-white shadow-md">
+            <h1
+              className="cursor-pointer bg-green-500 text-white hover:bg-white hover:border-2 hover:border-green-500 hover:text-black flex items-center gap-1 text-base  px-2 py-1 rounded-md border-2 border-white shadow-md"
+              onClick={handleClick}
+            >
               <BsBoxArrowInRight size={20} className="mb-1" />
               Submit Order
             </h1>
