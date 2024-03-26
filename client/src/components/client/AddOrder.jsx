@@ -10,6 +10,7 @@ import PPR from "./ppr";
 import PEX from "./pex";
 import UPVC from "./upvc";
 import RAKDUCT from "./rakduct";
+import { BsBoxArrowInRight } from "react-icons/bs";
 
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
@@ -28,22 +29,24 @@ const AddOrder = ({ userData, status, setStatus }) => {
     setOrderData,
   };
 
+  console.log(orderData);
+
   const renderComponent = (type) => {
     switch (type) {
       case "ppr":
         return <PPR {...renderProps} />;
 
       case "pex":
-        return <PEX />;
+        return <PEX {...renderProps} />;
 
       case "upvc":
-        return <UPVC />;
+        return <UPVC {...renderProps} />;
 
       case "rakduct":
-        return <RAKDUCT />;
+        return <RAKDUCT {...renderProps} />;
 
       default:
-        return <PPR />;
+        return <PPR {...renderProps} />;
     }
   };
 
@@ -175,9 +178,14 @@ const AddOrder = ({ userData, status, setStatus }) => {
 
           {renderComponent(type)}
 
-          <div className="flex items-center justify-start mb-2">
+          <div className="flex items-center justify-between mb-3">
             <h1 className="text-2xl">
               Order #: <span className="font-medium">{orderNo}</span>
+            </h1>
+
+            <h1 className="cursor-pointer bg-green-500 text-white hover:bg-white hover:border-2 hover:border-green-500 hover:text-black flex items-center gap-1 text-base  px-2 py-1 rounded-md border-2 border-white shadow-md">
+              <BsBoxArrowInRight size={20} className="mb-1" />
+              Submit Order
             </h1>
           </div>
           <OrderList

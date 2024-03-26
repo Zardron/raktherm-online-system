@@ -9,14 +9,14 @@ const index = ({ orderId, setOrderData }) => {
   };
 
   return (
-    <>
+    <div className="animate__animated animate__fadeIn">
       <h1 className="text-2xl">Pipes</h1>
       <Pipes {...renderProps} />
       <hr className="my-4" />
       <h1 className="text-2xl">Fittings</h1>
       <Fittings {...renderProps} />
       <hr className="my-4" />
-    </>
+    </div>
   );
 };
 

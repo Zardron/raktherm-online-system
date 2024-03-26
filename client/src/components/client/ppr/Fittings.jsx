@@ -88,21 +88,6 @@ const Fittings = ({ orderId, setOrderData }) => {
           handleChange={(val) => setData({ ...data, itemCode: val })}
         />
 
-        {/* <Select
-          id="itemCode"
-          className="w-full dropdown"
-          required
-          onChange={handleChange}
-        >
-          <option className="options" value={itemCode}>
-            Item Code
-          </option>
-          {filter[0]?.items?.map((data) => (
-            <option key={data.name} value={data.itemCode}>
-              {data.itemCode}
-            </option>
-          ))}
-        </Select> */}
         <TextInput
           id="quantity"
           type="number"

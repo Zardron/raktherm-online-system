@@ -59,24 +59,28 @@ export const addOrder = async (req, res) => {
       .status(400)
       .json({ message: "Item is already exist in your order list." });
 
-  const updateOrder = await Order.findByIdAndUpdate(
-    id,
-    {
-      $push: {
-        orders: {
-          itemName: itemName,
-          itemCode: itemCode,
-          quantity: quantity,
-          oem: oem,
+  try {
+    const updateOrder = await Order.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          orders: {
+            itemName: itemName,
+            itemCode: itemCode,
+            quantity: quantity,
+            oem: oem,
+          },
         },
       },
-    },
-    {
-      new: true,
-    }
-  );
+      {
+        new: true,
+      }
+    );
 
-  res.status(200).json(updateOrder);
+    res.status(200).json(updateOrder);
+  } catch (error) {
+    res.status(401).json(error);
+  }
 };
 
 export const removeSpecificOrder = async (req, res) => {

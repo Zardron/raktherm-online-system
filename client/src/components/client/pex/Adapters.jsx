@@ -1,12 +1,12 @@
 import { TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { PPR_PIPES, PPR_PIPES_OPTIONS } from "../data";
+import { FITTINGS_OPTIONS, PPR_FITTINGS, PPR_PIPES } from "../data";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ItemCode from "./ItemCode";
 import ItemName from "./ItemName";
+import ItemCode from "./ItemCode";
 
-const Pipes = ({ orderId, setOrderData }) => {
+const Adapters = ({ orderId, setOrderData }) => {
   const [data, setData] = useState({
     itemName: "",
     itemCode: "",
@@ -15,7 +15,7 @@ const Pipes = ({ orderId, setOrderData }) => {
 
   const { itemName, itemCode, quantity } = data;
 
-  const filter = PPR_PIPES?.filter((item) => item?.name === itemName);
+  const filter = PPR_FITTINGS?.filter((item) => item?.name === itemName);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
@@ -29,7 +29,7 @@ const Pipes = ({ orderId, setOrderData }) => {
         itemName: itemName,
         itemCode: itemCode,
         quantity: quantity,
-        oem: "Meters",
+        oem: "Pcs",
       })
       .then((res) => {
         setOrderData(res?.data?.orders),
@@ -73,7 +73,7 @@ const Pipes = ({ orderId, setOrderData }) => {
         className="flex items-center justify-center gap-4 mb-3"
       >
         <ItemName
-          options={PPR_PIPES_OPTIONS}
+          options={FITTINGS_OPTIONS}
           label="name"
           id="itemName"
           selectedVal={itemName}
@@ -99,7 +99,7 @@ const Pipes = ({ orderId, setOrderData }) => {
         />
         <TextInput
           className="w-[250px] border-none outline-none"
-          value="Meters"
+          value="Pcs"
           readOnly
         />
         <button
@@ -113,4 +113,4 @@ const Pipes = ({ orderId, setOrderData }) => {
   );
 };
 
-export default Pipes;
+export default Adapters;

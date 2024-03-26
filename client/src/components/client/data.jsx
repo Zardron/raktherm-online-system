@@ -25,6 +25,12 @@ export const PPR_PIPES_OPTIONS = [
   {
     name: "PN 25 Stabi PP-R Pipes (UV Protection)",
   },
+  {
+    name: "PPR Glass Fiber Reinforced Pipes SDR 7.4",
+  },
+  {
+    name: "PPR UV Glass Fiber Reinforced Pipes SDR 7.4",
+  },
 ];
 
 export const FITTINGS_OPTIONS = [
@@ -464,6 +470,82 @@ export const PPR_PIPES = [
       },
       {
         itemCode: "PPSUV25-110",
+      },
+    ],
+  },
+  {
+    name: "PPR Glass Fiber Reinforced Pipes SDR 7.4",
+    items: [
+      {
+        itemCode: "PF20-20",
+      },
+      {
+        itemCode: "PF20-25",
+      },
+      {
+        itemCode: "PF20-32",
+      },
+      {
+        itemCode: "PF20-40",
+      },
+      {
+        itemCode: "PF20-50",
+      },
+      {
+        itemCode: "PF20-63",
+      },
+      {
+        itemCode: "PF20-75",
+      },
+      {
+        itemCode: "PF20-90",
+      },
+      {
+        itemCode: "PF20-110",
+      },
+      {
+        itemCode: "PF20-125",
+      },
+      {
+        itemCode: "PF20-160",
+      },
+    ],
+  },
+  {
+    name: "PPR UV Glass Fiber Reinforced Pipes SDR 7.4",
+    items: [
+      {
+        itemCode: "PFUV20-20",
+      },
+      {
+        itemCode: "PFUV20-25",
+      },
+      {
+        itemCode: "PFUV20-32",
+      },
+      {
+        itemCode: "PFUV20-40",
+      },
+      {
+        itemCode: "PFUV20-50",
+      },
+      {
+        itemCode: "PFUV20-63",
+      },
+      {
+        itemCode: "PFUV20-75",
+      },
+      {
+        itemCode: "PFUV20-90",
+      },
+      {
+        itemCode: "PFUV20-110",
+      },
+      {
+        itemCode: "PFUV20-125",
+      },
+      {
+        itemCode: "PFUV20-160",
       },
     ],
   },
