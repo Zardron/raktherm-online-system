@@ -43,6 +43,22 @@ export const addOrder = async (req, res) => {
   const { id } = req.params;
   const { itemCode, itemName, quantity, oem } = req.body;
 
+  const checkExistItem = await Order.findById(id);
+
+  let exist = "";
+
+  checkExistItem.orders.forEach((element) => {
+    if (element.itemName === itemName && element.itemCode === itemCode) {
+      return (exist = true);
+    }
+    return (exist = false);
+  });
+
+  if (exist)
+    return res
+      .status(400)
+      .json({ message: "Item is already exist in your order list." });
+
   const updateOrder = await Order.findByIdAndUpdate(
     id,
     {

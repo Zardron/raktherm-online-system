@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const SearchableDropdown = ({
-  options,
-  label,
-  id,
-  selectedVal,
-  handleChange,
-}) => {
+const ItemCode = ({ options, label, id, selectedVal, handleChange }) => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,7 +13,7 @@ const SearchableDropdown = ({
 
   const selectOption = (option) => {
     setQuery(() => "");
-    handleChange(option[label]);
+    handleChange(option.itemCode);
     setIsOpen((isOpen) => !isOpen);
   };
 
@@ -34,9 +28,10 @@ const SearchableDropdown = ({
     return "";
   };
 
-  const filter = (options) => {
-    return options.filter(
-      (option) => option[label].toLowerCase().indexOf(query.toLowerCase()) > -1
+  const filter = () => {
+    return options?.filter(
+      (option) =>
+        option?.itemCode?.toLowerCase().indexOf(query.toLowerCase()) > -1
     );
   };
 
@@ -49,7 +44,7 @@ const SearchableDropdown = ({
             type="text"
             value={getDisplayValue()}
             name="searchTerm"
-            placeholder="Item Name"
+            placeholder="Item Code"
             autoComplete="off"
             onChange={(e) => {
               setQuery(e.target.value);
@@ -62,16 +57,10 @@ const SearchableDropdown = ({
       </div>
 
       <div className={`options ${isOpen ? "open" : ""}`}>
-        {filter(options).map((option, index) => {
+        {filter(options)?.map((option, index) => {
           return (
-            <div
-              onClick={() => selectOption(option)}
-              className={`option ${
-                option[label] === selectedVal ? "selected" : ""
-              }`}
-              key={`${id}-${index}`}
-            >
-              {option[label]}
+            <div onClick={() => selectOption(option)} className={`option }`}>
+              {option.itemCode}
             </div>
           );
         })}
@@ -80,4 +69,4 @@ const SearchableDropdown = ({
   );
 };
 
-export default SearchableDropdown;
+export default ItemCode;

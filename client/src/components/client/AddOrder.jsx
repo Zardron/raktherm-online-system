@@ -6,6 +6,10 @@ import axios from "axios";
 import { Button, Modal } from "flowbite-react";
 import { BsExclamationOctagon } from "react-icons/bs";
 import ConfirmationMessage from "../ConfirmationMessage";
+import PPR from "./ppr";
+import PEX from "./pex";
+import UPVC from "./upvc";
+import RAKDUCT from "./rakduct";
 
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
@@ -17,6 +21,31 @@ const AddOrder = ({ userData, status, setStatus }) => {
       Math.floor(100000 + Math.random() * 900000)
   );
   const [orderForm, setOrderForm] = useState(false);
+  const [type, setType] = useState("ppr");
+
+  const renderProps = {
+    orderId,
+    setOrderData,
+  };
+
+  const renderComponent = (type) => {
+    switch (type) {
+      case "ppr":
+        return <PPR {...renderProps} />;
+
+      case "pex":
+        return <PEX />;
+
+      case "upvc":
+        return <UPVC />;
+
+      case "rakduct":
+        return <RAKDUCT />;
+
+      default:
+        return <PPR />;
+    }
+  };
 
   // Generate New OR #
   const generateNewOr = () => {
@@ -77,8 +106,12 @@ const AddOrder = ({ userData, status, setStatus }) => {
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <h1
-          className="flex items-center gap-1 text-base bg-green-500 text-white px-2 py-1 rounded-md border-2 border-white shadow-md cursor-pointer hover:bg-white hover:border-2 hover:border-green-500 hover:text-black"
-          onClick={handleCreateOrder}
+          className={`${
+            orderForm
+              ? "bg-green-300 cursor-not-allowed text-white"
+              : "cursor-pointer bg-green-500 text-white hover:bg-white hover:border-2 hover:border-green-500 hover:text-black"
+          } flex items-center gap-1 text-base  px-2 py-1 rounded-md border-2 border-white shadow-md `}
+          onClick={orderForm ? () => {} : handleCreateOrder}
         >
           <IoCreateOutline size={20} className="mb-1" />
           Create New Order
@@ -97,12 +130,51 @@ const AddOrder = ({ userData, status, setStatus }) => {
       <div className="relative h-full w-full border shadow-md">
         {!orderForm && <div className="absolute w-full h-full bg-glass z-50" />}
         <div className="p-4">
-          <div className="flex flex-row items-center justify-between mb-4">
-            <h1 className="text-2xl">Pipes</h1>
+          <div className="flex flex-row items-center justify-start gap-2 mb-4">
+            <div
+              className={`w-28 py-1 rounded-md shadow-md  border-2 text-center  font-medium cursor-pointer hover:bg-green-500 hover:border-white hover:text-white ${
+                type === "ppr"
+                  ? "border-white bg-green-500 text-white"
+                  : "border-green-500 bg-white text-green-500"
+              }`}
+              onClick={() => setType("ppr")}
+            >
+              PPR
+            </div>
+            <div
+              className={`w-28 py-1 rounded-md shadow-md  border-2 text-center  font-medium cursor-pointer hover:bg-yellow-300 hover:border-white hover:text-white ${
+                type === "pex"
+                  ? "border-white bg-yellow-300 text-white"
+                  : "border-yellow-300 bg-white text-yellow-300"
+              }`}
+              onClick={() => setType("pex")}
+            >
+              PEX
+            </div>
+            <div
+              className={`w-28 py-1 rounded-md shadow-md  border-2 text-center  font-medium cursor-pointer hover:bg-orange-400 hover:border-white hover:text-white ${
+                type === "upvc"
+                  ? "border-white bg-orange-400 text-white"
+                  : "border-orange-400 bg-white text-orange-400"
+              }`}
+              onClick={() => setType("upvc")}
+            >
+              UPVC
+            </div>
+            <div
+              className={`w-28 py-1 rounded-md shadow-md  border-2 text-center  font-medium cursor-pointer hover:bg-blue-600/75 hover:border-white hover:text-white ${
+                type === "rakduct"
+                  ? "border-white bg-blue-600/75 text-white"
+                  : "border-blue-600/75 bg-white text-blue-600/75"
+              }`}
+              onClick={() => setType("rakduct")}
+            >
+              RAKDUCT
+            </div>
           </div>
-          <hr className="my-5" />
-          <h1 className="text-2xl mb-4">Fittings</h1>
-          <hr className="my-6" />
+
+          {renderComponent(type)}
+
           <div className="flex items-center justify-start mb-2">
             <h1 className="text-2xl">
               Order #: <span className="font-medium">{orderNo}</span>
@@ -148,7 +220,9 @@ const AddOrder = ({ userData, status, setStatus }) => {
                 <Button
                   color="failure"
                   onClick={() => {
-                    setOpenModal(false), handleCancelOrder(userId);
+                    setOpenModal(false),
+                      handleCancelOrder(userId),
+                      setOrderForm(false);
                   }}
                 >
                   No, I start new order.

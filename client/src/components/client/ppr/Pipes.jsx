@@ -1,9 +1,10 @@
-import { Select, TextInput } from "flowbite-react";
+import { TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { PPR_PIPES, PPR_PIPES_OPTIONS } from "../data";
 import axios from "axios";
 import { toast } from "react-toastify";
-import SearchableDropdown from "../SearchableDropdown";
+import ItemCode from "./ItemCode";
+import ItemName from "./ItemName";
 
 const Pipes = ({ orderId, setOrderData }) => {
   const [data, setData] = useState({
@@ -42,6 +43,7 @@ const Pipes = ({ orderId, setOrderData }) => {
             progress: undefined,
             theme: "colored",
           });
+        setData({ ...data, itemCode: "", quantity: "" });
       })
       .catch((err) =>
         toast.error(err?.response?.data?.message, {
@@ -61,9 +63,8 @@ const Pipes = ({ orderId, setOrderData }) => {
 
   useEffect(() => {
     setItemCodeOption(filter[0]?.items);
+    setData({ ...data, itemCode: "" });
   }, [itemName]);
-
-  console.log(itemCodeOption);
 
   return (
     <>
@@ -71,7 +72,7 @@ const Pipes = ({ orderId, setOrderData }) => {
         onSubmit={handleSubmit}
         className="flex items-center justify-center gap-4 mb-3"
       >
-        <SearchableDropdown
+        <ItemName
           options={PPR_PIPES_OPTIONS}
           label="name"
           id="itemName"
@@ -79,39 +80,34 @@ const Pipes = ({ orderId, setOrderData }) => {
           handleChange={(val) => setData({ ...data, itemName: val })}
         />
 
-        {/* <Select
-          id="itemName"
-          className="w-full"
-          required
-          onChange={handleChange}
-        >
-          <option value={itemName}>Item Name</option>
-          {PPR_PIPES.map((data) => (
-            <>
-              <option key={data.name} value={data.name}>
-                {data.name}
-              </option>
-            </>
-          ))}
-        </Select> */}
-        <Select
+        <ItemCode
+          options={itemCodeOption}
+          label="name"
           id="itemCode"
-          className="w-full"
+          selectedVal={itemCode}
+          handleChange={(val) => setData({ ...data, itemCode: val })}
+        />
+
+        {/* <Select
+          id="itemCode"
+          className="w-full dropdown"
           required
           onChange={handleChange}
         >
-          <option value={itemCode}>Item Code</option>
+          <option className="options" value={itemCode}>
+            Item Code
+          </option>
           {filter[0]?.items?.map((data) => (
             <option key={data.name} value={data.itemCode}>
               {data.itemCode}
             </option>
           ))}
-        </Select>
+        </Select> */}
         <TextInput
           id="quantity"
           type="number"
-          className="w-full"
-          placeholder="Quantity"
+          className="w-full font-medium"
+          placeholder="QUANTITY"
           required
           value={quantity}
           onChange={handleChange}

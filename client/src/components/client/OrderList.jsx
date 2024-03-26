@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { TiDelete } from "react-icons/ti";
+import { toast } from "react-toastify";
 
 const OrderList = ({ orderData, orderId, setOrderData }) => {
   const handleRemoveItem = (id) => {
@@ -8,7 +9,21 @@ const OrderList = ({ orderData, orderId, setOrderData }) => {
       .put(`http://localhost:5000/api/orders/remove/${orderId}`, {
         itemId: id,
       })
-      .then((res) => setOrderData(res?.data?.orders));
+      .then((res) => {
+        setOrderData(res?.data?.orders);
+        if (res) {
+          toast.success("Item has been removed from your order list.", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
   };
 
   return (
@@ -56,7 +71,7 @@ const OrderList = ({ orderData, orderId, setOrderData }) => {
       {/* ******************************************************************************************** */}
 
       {/* Content */}
-      <div className="h-[320px] max-h-[320px] overflow-auto">
+      <div className="h-[350px] max-h-[350px] overflow-auto">
         {orderData?.length === 0 ? (
           <div className="flex items-center justify-center w-full h-full text-2xl">
             -- No data available --
