@@ -29,7 +29,7 @@ const Fittings = ({ orderId, setOrderData }) => {
         itemName: itemName,
         itemCode: itemCode,
         quantity: quantity,
-        oem: "Meters",
+        oem: "Pcs",
       })
       .then((res) => {
         setOrderData(res?.data?.orders),
@@ -114,7 +114,7 @@ const Fittings = ({ orderId, setOrderData }) => {
         />
         <TextInput
           className="w-[250px] border-none outline-none"
-          value="Meters"
+          value="Pcs"
           readOnly
         />
         <button
