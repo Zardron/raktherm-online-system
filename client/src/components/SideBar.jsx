@@ -1,11 +1,12 @@
 import LOGO from "../assets/img/rak-logo.png";
 import { TbLogout } from "react-icons/tb";
-import { FaMoon, FaRegListAlt } from "react-icons/fa";
+import { FaRegListAlt } from "react-icons/fa";
 import { TbReportAnalytics } from "react-icons/tb";
 import { LiaUsersSolid } from "react-icons/lia";
 import { GrStatusInfo } from "react-icons/gr";
 import { LuUserPlus2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { RiProductHuntLine } from "react-icons/ri";
 
 const SideBar = ({ page, setPage, handleStatus, userData }) => {
   const { userType } = userData;
@@ -86,6 +87,17 @@ const SideBar = ({ page, setPage, handleStatus, userData }) => {
                 onClick={() => setPage("add-customer")}
               >
                 <LuUserPlus2 /> Add Customer
+              </div>
+            )}
+
+            {userType === "Admin" && (
+              <div
+                className={`${
+                  page === "add-product" && "bg-gray-100"
+                } flex flex-row items-center gap-4 text-xl hover:bg-gray-100 p-4 rounded-md cursor-pointer`}
+                onClick={() => setPage("add-product")}
+              >
+                <RiProductHuntLine /> Add Product
               </div>
             )}
 

@@ -1,6 +1,18 @@
 import PPR_Fittings from "../model/PPRFittingsModel.js";
 import PPR_Pipes from "../model/PPRPipesModel.js";
 
+export const getAllPprPipes = async (req, res) => {
+  const allPipes = await PPR_Pipes.find({}).sort({ name: 1 });
+
+  res.status(200).json(allPipes);
+};
+
+export const getAllPprFittings = async (req, res) => {
+  const allPipes = await PPR_Fittings.find({}).sort({ name: 1 });
+
+  res.status(200).json(allPipes);
+};
+
 export const getPprPipes = async (req, res) => {
   const allPipes = await PPR_Pipes.find(
     {},

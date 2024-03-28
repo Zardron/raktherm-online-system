@@ -5,6 +5,7 @@ import Customers from "./Customers";
 import Orders from "./Orders";
 import OrderStatus from "./OrderStatus";
 import AddCustomer from "./AddCustomer";
+import AddProduct from "./AddProduct";
 import AddOrder from "./client/AddOrder";
 import MyOrders from "./client/MyOrders";
 
@@ -38,6 +39,9 @@ const Content = ({
 
       case "add-customer":
         return <AddCustomer {...props} />;
+
+      case "add-product":
+        return <AddProduct {...props} />;
     }
   };
 
