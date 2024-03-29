@@ -91,6 +91,27 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
       });
   };
 
+  const handleRemovePipe = (name, code) => {
+    axios
+      .post("http://localhost:5000/api/products/remove-ppr-pipes", {
+        itemName: name,
+        itemCode: code,
+      })
+      .then((res) => {
+        setPipeData(res?.data);
+        toast.success("Product has been removed", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
+
   return (
     <>
       <div
@@ -196,13 +217,11 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
                   {/* Item Code */}
 
                   <div className="w-full">
-                    {data?.items
-                      ?.sort((a, b) => (a.itemCode > b.itemCode ? 1 : -1))
-                      .map((item) => (
-                        <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
-                          {item.itemCode}
-                        </div>
-                      ))}
+                    {data?.items?.map((item) => (
+                      <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                        {item.itemCode}
+                      </div>
+                    ))}
                   </div>
 
                   {/* OEM */}
@@ -214,7 +233,9 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
                           title="Remove"
                           color="red"
                           className="cursor-pointer"
-                          onClick={() => console.log(data.name, item.itemCode)}
+                          onClick={() =>
+                            handleRemovePipe(data.name, item.itemCode)
+                          }
                         />
                       </div>
                     ))}

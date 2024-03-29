@@ -68,6 +68,27 @@ export const addPprPipes = async (req, res) => {
   }
 };
 
+export const removePprPipes = async (req, res) => {
+  const { itemName, itemCode } = req.body;
+
+  const removePprPipes = await PPR_Pipes.findOneAndUpdate(
+    { name: itemName },
+    {
+      $pull: {
+        items: {
+          itemCode: itemCode,
+        },
+      },
+    }
+  );
+
+  if (removePprPipes) {
+    const allPipes = await PPR_Pipes.find({}).sort({ name: 1 });
+
+    return res.status(200).json(allPipes);
+  }
+};
+
 export const addPprFittings = async (req, res) => {
   const products = await PPR_Fittings.create(req.body);
 
