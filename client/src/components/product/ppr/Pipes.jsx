@@ -2,10 +2,27 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import axios from "axios";
 import { TiDelete } from "react-icons/ti";
+import ItemName from "./ItemName";
+import ItemCode from "./ItemCode";
+import { toast } from "react-toastify";
 
 const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
   const [query, setQuery] = useState("");
   const [pipeData, setPipeData] = useState([]);
+
+  const [data, setData] = useState({
+    itemName: "",
+    itemCode: "",
+  });
+  const [pprPipes, setPprPipes] = useState([]);
+
+  const { itemName, itemCode } = data;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/ppr-pipes")
+      .then((res) => setPprPipes(res?.data));
+  }, []);
 
   useEffect(() => {
     axios
@@ -19,12 +36,65 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
     );
   };
 
-  console.log(filter());
+  const filterItemCode = pipeData?.filter((item) => item?.name === itemName);
+  const [itemCodeOption, setItemCodeOption] = useState([]);
+
+  useEffect(() => {
+    setItemCodeOption(filterItemCode[0]?.items);
+  }, [itemName]);
+
+  const handleAddPipe = () => {
+    if (!itemName && !itemCode) {
+      return toast.error("All field is required!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+
+    axios
+      .post("http://localhost:5000/api/products/ppr-pipes", data)
+      .then((res) => {
+        if (res) {
+          axios
+            .get("http://localhost:5000/api/products/all-ppr-pipes")
+            .then((res) => setPipeData(res?.data));
+
+          toast.success("New product has been added", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
 
   return (
     <>
       <div
-        className="flex items-center justify-between p-4 border-r-2 border-l-2 border-t-2 bg-green-500 text-white rounded-tr-lg rounded-tl-lg cursor-pointer"
+        className="flex items-center justify-between px-4 py-2 border-r-2 border-l-2 border-t-2 bg-green-500 text-white rounded-tr-lg rounded-tl-lg cursor-pointer"
         onClick={() => {
           setOpenPipes(!openPipes);
           setOpenFittings(false);
@@ -42,21 +112,32 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
       </div>
       <div
         className={`border-r-2 border-l-2 border-b-2 overflow-hidden ease-linear duration-300 ${
-          openPipes ? "max-h-[480px] p-4" : "max-h-0"
+          openPipes ? "max-h-[600px] p-4" : "max-h-0"
         }`}
       >
         <div className="flex items-center justify-between gap-4">
-          <input
-            placeholder="Item Name"
-            className="w-full px-4 py-2 rounded-md border-2 focus:outline-none"
+          <ItemName
+            options={pprPipes}
+            label="name"
+            id="itemName"
+            selectedVal={itemName}
+            handleChange={(val) => {
+              setData({ ...data, itemName: val });
+            }}
           />
 
-          <input
-            placeholder="Item Code"
-            className="w-full px-4 py-2 rounded-md border-2 focus:outline-none"
+          <ItemCode
+            options={itemCodeOption}
+            label="name"
+            id="itemCode"
+            selectedVal={itemCode}
+            handleChange={(val) => setData({ ...data, itemCode: val })}
           />
 
-          <button className="px-4 py-1 bg-green-500 border-2 border-green-500 rounded-md text-2xl text-white hover:border-green-500 hover:bg-white hover:text-black">
+          <button
+            className="px-4 py-1 bg-green-500 border-2 border-green-500 rounded-md text-2xl text-white hover:border-green-500 hover:bg-white hover:text-black"
+            onClick={handleAddPipe}
+          >
             +
           </button>
         </div>
@@ -64,8 +145,8 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
         <div className="flex items-center justify-between bg-gray-200/75 mt-4 p-2 px-4 border-b border-white">
           <h1 className="text-2xl pl-2 font-bold">PIPES LIST</h1>
           <input
-            placeholder="Search . . . ."
-            className="px-4 py-2 rounded-md border-2 focus:outline-none"
+            placeholder="Search Item Name"
+            className="px-4 py-2 rounded-md border-2 focus:outline-none placeholder:text-gray-400"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -115,11 +196,13 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
                   {/* Item Code */}
 
                   <div className="w-full">
-                    {data?.items?.map((item) => (
-                      <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
-                        {item.itemCode}
-                      </div>
-                    ))}
+                    {data?.items
+                      ?.sort((a, b) => (a.itemCode > b.itemCode ? 1 : -1))
+                      .map((item) => (
+                        <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                          {item.itemCode}
+                        </div>
+                      ))}
                   </div>
 
                   {/* OEM */}

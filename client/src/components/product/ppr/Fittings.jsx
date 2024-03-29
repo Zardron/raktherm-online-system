@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import axios from "axios";
+import { TiDelete } from "react-icons/ti";
 
-const Fittings = ({ openFittings, setOpenFittings, setOpenPipes }) => {
-  const [orderData, setOrderData] = useState([]);
+const Fittings = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
+  const [query, setQuery] = useState("");
+  const [pipeData, setPipeData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/all-ppr-fittings")
+      .then((res) => setPipeData(res?.data));
+  }, [type]);
+
+  const filter = () => {
+    return pipeData.filter(
+      (item) => item?.name?.toLowerCase().indexOf(query.toLowerCase()) > -1
+    );
+  };
+
   return (
     <>
       <div
-        className="flex items-center justify-between p-4 border-r-2 border-l-2 border-t-2 bg-green-500 text-white rounded-tr-lg rounded-tl-lg cursor-pointer"
+        className="flex items-center justify-between px-4 py-2 border-r-2 border-l-2 border-t-2 bg-green-500 text-white rounded-tr-lg rounded-tl-lg cursor-pointer"
         onClick={() => {
           setOpenFittings(!openFittings);
           setOpenPipes(false);
@@ -24,7 +40,7 @@ const Fittings = ({ openFittings, setOpenFittings, setOpenPipes }) => {
       </div>
       <div
         className={`border-r-2 border-l-2 border-b-2 overflow-hidden ease-linear duration-300 ${
-          openFittings ? "max-h-[500px] p-4" : "max-h-0"
+          openFittings ? "max-h-[480px] p-4" : "max-h-0"
         }`}
       >
         <div className="flex items-center justify-between gap-4">
@@ -43,87 +59,83 @@ const Fittings = ({ openFittings, setOpenFittings, setOpenPipes }) => {
           </button>
         </div>
 
+        <div className="flex items-center justify-between bg-gray-200/75 mt-4 p-2 px-4 border-b border-white">
+          <h1 className="text-2xl pl-2 font-bold">FITTINGS LIST</h1>
+          <input
+            placeholder="Search Item Name"
+            className="px-4 py-2 rounded-md border-2 focus:outline-none placeholder:text-gray-400"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
         {/* Header */}
-        <div className="flex flex-row text-sm border-b pt-4">
+        <div className="flex flex-row text-sm border-b">
           {/* Item Code */}
-          <div className="w-1/2">
-            <div className="bg-gray-200/75 text-left py-3 px-6 font-bold uppercase text-[#374151]">
-              item no
-            </div>
-          </div>
-
-          {/* Item Code */}
-          <div className="w-full">
-            <div className="bg-gray-200/75 text-left py-3 px-6 font-bold uppercase text-[#374151]">
-              item code
-            </div>
-          </div>
-
-          {/* Item Name */}
           <div className="w-full">
             <div className="bg-gray-200/75 text-left py-3 px-6 font-bold uppercase text-[#374151]">
               item name
             </div>
           </div>
 
+          {/* Item Name */}
+          <div className="w-full">
+            <div className="bg-gray-200/75 text-left py-3 px-6 font-bold uppercase text-[#374151]">
+              item code
+            </div>
+          </div>
+
           {/* Action */}
           <div className="w-1/2">
-            <div className="bg-gray-200/75 text-center py-3 px-6 font-bold uppercase text-[#374151]">
+            <div className="bg-gray-200/75 text-right py-3 px-6 font-bold uppercase text-[#374151]">
               action
             </div>
           </div>
         </div>
         {/* End */}
-
         <div className="h-[350px] max-h-[350px] overflow-auto">
-          {orderData?.length === 0 ? (
+          {pipeData?.length === 0 ? (
             <div className="flex items-center justify-center w-full h-full text-2xl">
               -- No data available --
             </div>
           ) : (
             <>
-              {orderData?.map((data) => (
-                <div
-                  className="flex flex-row text-sm border-b-gray-100 border-b hover:bg-gray-50"
-                  ref={ref}
-                >
+              {filter()?.map((data, index) => (
+                <div className="flex flex-row text-sm border-b-gray-100 border-b hover:bg-gray-50">
                   {/* Item Name */}
                   <div className="w-full">
-                    <div className="text-left py-3 px-6 font-medium text-[#111827]">
-                      {data.itemName}
-                    </div>
+                    {data?.items?.map((item) => (
+                      <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                        {data.name}
+                      </div>
+                    ))}
                   </div>
 
                   {/* Item Code */}
-                  <div className="w-1/2">
-                    <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
-                      {data.itemCode}
-                    </div>
-                  </div>
 
-                  {/* Quantity */}
-                  <div className="w-1/2">
-                    <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
-                      {data.quantity}
-                    </div>
+                  <div className="w-full">
+                    {data?.items?.map((item) => (
+                      <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                        {item.itemCode}
+                      </div>
+                    ))}
                   </div>
 
                   {/* OEM */}
                   <div className="w-1/2">
-                    <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
-                      {data.oem}
-                    </div>
+                    {data?.items?.map((item) => (
+                      <div className="flex items-center justify-end text-left py-3 px-6 text-xs text-[#6b7280] pr-10">
+                        <TiDelete
+                          size={16}
+                          title="Remove"
+                          color="red"
+                          className="cursor-pointer"
+                          onClick={() => console.log(data.name, item.itemCode)}
+                        />
+                      </div>
+                    ))}
                   </div>
 
                   {/* Action */}
-                  <div className="w-1/2">
-                    <div
-                      className="flex items-center justify-center py-3 px-6 text-xs text-red-500 cursor-pointer"
-                      onClick={() => handleRemoveItem(data._id)}
-                    >
-                      <TiDelete size={20} title="Remove" />
-                    </div>
-                  </div>
                 </div>
               ))}
             </>

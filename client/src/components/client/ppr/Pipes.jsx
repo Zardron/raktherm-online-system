@@ -7,9 +7,14 @@ import ItemCode from "./ItemCode";
 import ItemName from "./ItemName";
 
 const Pipes = ({ orderId, setOrderData }) => {
+  const [data, setData] = useState({
+    itemName: "",
+    itemCode: "",
+    quantity: "",
+  });
   const [pprPipes, setPprPipes] = useState([]);
-
-  console.log(pprPipes);
+  const [allData, setAllData] = useState([]);
+  const { itemName, itemCode, quantity } = data;
 
   useEffect(() => {
     axios
@@ -17,15 +22,13 @@ const Pipes = ({ orderId, setOrderData }) => {
       .then((res) => setPprPipes(res?.data));
   }, []);
 
-  const [data, setData] = useState({
-    itemName: "",
-    itemCode: "",
-    quantity: "",
-  });
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/all-ppr-pipes")
+      .then((res) => setAllData(res?.data));
+  }, []);
 
-  const { itemName, itemCode, quantity } = data;
-
-  const filter = PPR_PIPES?.filter((item) => item?.name === itemName);
+  const filter = allData?.filter((item) => item?.name === itemName);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });

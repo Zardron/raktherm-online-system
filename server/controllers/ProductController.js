@@ -23,9 +23,49 @@ export const getPprPipes = async (req, res) => {
 };
 
 export const addPprPipes = async (req, res) => {
-  const products = await PPR_Pipes.create(req.body);
+  const { itemName, itemCode } = req.body;
 
-  res.status(200).json(products);
+  const findPipe = await PPR_Pipes.findOne({ name: itemName });
+
+  if (findPipe) {
+    let exist;
+    findPipe?.items.forEach((element) => {
+      if (element.itemCode === itemCode) {
+        return (exist = "true");
+      }
+      return (exist = false);
+    });
+
+    if (exist)
+      return res.status(400).json({ message: "Product is already exist." });
+
+    try {
+      const updateProduct = await PPR_Pipes.findByIdAndUpdate(
+        findPipe._id,
+        {
+          $push: {
+            items: {
+              itemCode: itemCode,
+            },
+          },
+        },
+        {
+          new: true,
+        }
+      );
+
+      res.status(200).json(updateProduct);
+    } catch (error) {
+      res.status(401).json(error);
+    }
+  } else {
+    const newProduct = await PPR_Pipes.create({
+      name: itemName,
+      items: [{ itemCode: itemCode }],
+    });
+
+    res.status(200).json(newProduct);
+  }
 };
 
 export const addPprFittings = async (req, res) => {
