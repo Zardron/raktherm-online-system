@@ -13,9 +13,23 @@ const Adapters = ({ orderId, setOrderData }) => {
     quantity: "",
   });
 
+  const [pexAdapters, setPexAdapters] = useState([]);
+  const [allData, setAllData] = useState([]);
   const { itemName, itemCode, quantity } = data;
 
-  const filter = PPR_FITTINGS?.filter((item) => item?.name === itemName);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/pex-adapters")
+      .then((res) => setPexAdapters(res?.data));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/all-pex-adapters")
+      .then((res) => setAllData(res?.data));
+  }, []);
+
+  const filter = allData?.filter((item) => item?.name === itemName);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
@@ -73,7 +87,7 @@ const Adapters = ({ orderId, setOrderData }) => {
         className="flex items-center justify-center gap-4 mb-3"
       >
         <ItemName
-          options={FITTINGS_OPTIONS}
+          options={pexAdapters}
           label="name"
           id="itemName"
           selectedVal={itemName}

@@ -34,8 +34,8 @@ const Login = () => {
       axios
         .post("http://localhost:5000/api/auth/login", { email, password })
         .then((res) => {
-          localStorage.setItem("userDetails", JSON.stringify(res.data));
           navigate("/dashboard");
+          localStorage.setItem("userDetails", JSON.stringify(res.data));
         })
         .catch((err) => {
           toast.error(err?.response?.data?.message, {

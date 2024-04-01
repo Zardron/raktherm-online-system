@@ -1183,4 +1183,170 @@ export const PEX_PIPES = [
   },
 ];
 
+export const PEX_ADAPTERS_OPTION = [
+  {
+    name: "Female Elbow with Box",
+  },
+  {
+    name: "Pex Female Adaptor",
+  },
+  {
+    name: "Pex Male Adaptor",
+  },
+  {
+    name: "Ball valve Blu handle",
+  },
+  {
+    name: "Brass Male Elbow",
+  },
+  {
+    name: "Pex Air Release Valve",
+  },
+  {
+    name: "Brass Male End Plug",
+  },
+  {
+    name: "End Piece of Manifold",
+  },
+  {
+    name: "Manifold",
+  },
+  {
+    name: "Male Coupling",
+  },
+  {
+    name: "Reducer Sleeve",
+  },
+  {
+    name: "Brass Female Elbow",
+  },
+];
+
+export const PEX_ADAPTERS = [
+  {
+    name: "Female Elbow with Box",
+    items: [
+      { itemCode: "EF1-161/2(B)" },
+      { itemCode: "EF1-161/2(R)" },
+      { itemCode: "EF1-201/2(B)" },
+      { itemCode: "EF1-201/2(R)" },
+      { itemCode: "EF-161/2(B)" },
+      { itemCode: "EF-161/2(R)" },
+      { itemCode: "EF-201/2(B)" },
+      { itemCode: "EF-201/2(R)" },
+    ],
+  },
+  {
+    name: "Pex Female Adaptor",
+    items: [
+      { itemCode: "P-AFP1-161/2" },
+      { itemCode: "P-AFP1-201/2" },
+      { itemCode: "P-AFP1-253/4" },
+      { itemCode: "P-AFP1-321" },
+    ],
+  },
+  {
+    name: "Pex Male Adaptor",
+    items: [
+      { itemCode: "P-AMP1-161/2" },
+      { itemCode: "P-AMP1-201/2" },
+      { itemCode: "P-AMP1-251/2" },
+      { itemCode: "P-AMP1-253/4" },
+      { itemCode: "P-AMP1-321" },
+    ],
+  },
+  {
+    name: "Ball valve Blu handle",
+    items: [
+      { itemCode: "P-V1-11/4B" },
+      { itemCode: "P-V1-11/4R" },
+      { itemCode: "P-V1-1B" },
+      { itemCode: "P-V1-1R" },
+      { itemCode: "P-V1-3/4B" },
+      { itemCode: "P-V1-3/4R" },
+      { itemCode: "P-V1-1/2B" },
+      { itemCode: "P-V1-1/2R" },
+      { itemCode: "P-V2-1/2B" },
+      { itemCode: "P-V2-1/2R" },
+      { itemCode: "P-V2-1B" },
+    ],
+  },
+  {
+    name: "Brass Male Elbow",
+    items: [
+      { itemCode: "P-EM1-161/2" },
+      { itemCode: "P-EM1-201/2" },
+      { itemCode: "P-EM1-251/2" },
+      { itemCode: "P-EM1-253/4" },
+      { itemCode: "P-EM1-321" },
+      { itemCode: "P-EM1-3211/4" },
+    ],
+  },
+  {
+    name: "Pex Air Release Valve",
+    items: [{ itemCode: "P-ARV1-1/2" }, { itemCode: "P-ARV1-3/8" }],
+  },
+  {
+    name: "Brass Male End Plug",
+    items: [
+      { itemCode: "P-EP1-1/2" },
+      { itemCode: "P-EP1-1" },
+      { itemCode: "P-EP1-3/4" },
+      { itemCode: "P-EP1-11/4" },
+    ],
+  },
+  {
+    name: "End Piece of Manifold",
+    items: [
+      { itemCode: "P-EPM1-1" },
+      { itemCode: "P-EPM1-1/211/2" },
+      { itemCode: "P-EPM1-1/211/41" },
+      { itemCode: "P-EPM1-1/211/43" },
+      { itemCode: "P-EPM1-1/23/41/2" },
+    ],
+  },
+  {
+    name: "Manifold",
+    items: [
+      { itemCode: "P-MF1/10-11/41/2" },
+      { itemCode: "P-MF1/11-11/41/2" },
+      { itemCode: "P-MF1/12-11/41/2" },
+      { itemCode: "P-MF1/2-11/41/2" },
+      { itemCode: "P-MF1/2-3/41/2" },
+      { itemCode: "P-MF1/2-3/41/2" },
+      { itemCode: "P-MF1/3-11/41/2" },
+      { itemCode: "P-MF1/3-3/41/2" },
+      { itemCode: "P-MF1/4-11/2" },
+      { itemCode: "P-MF1/4-11/41/2" },
+      { itemCode: "P-MF1/4-3/41/2" },
+      { itemCode: "P-MF1/5-11/41/2" },
+      { itemCode: "P-MF1/6-11/2" },
+      { itemCode: "P-MF1/6-11/41/2" },
+      { itemCode: "P-MF1/7-11/2" },
+      { itemCode: "P-MF1/7-11/41/2" },
+      { itemCode: "P-MF1/8-11/2" },
+      { itemCode: "P-MF1/8-11/41/2" },
+      { itemCode: "P-MF1/9-11/41/2" },
+    ],
+  },
+  {
+    name: "Male Coupling",
+    items: [
+      { itemCode: "P-MMC1-1" },
+      { itemCode: "P-MMC1-1/2" },
+      { itemCode: "P-MMC1-11/4" },
+      { itemCode: "P-MMC1-3/4" },
+      { itemCode: "P-MMC1-341/2" },
+    ],
+  },
+  {
+    name: "Reducer Sleeve",
+    items: [{ itemCode: "P-RSP-3/41/2" }],
+  },
+  {
+    name: "Brass Female Elbow",
+    items: [{ itemCode: "P-EF2-161/2" }, { itemCode: "P-EF2-201/2" }],
+  },
+];
+
 // END

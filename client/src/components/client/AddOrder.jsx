@@ -11,7 +11,7 @@ import PEX from "./pex";
 import UPVC from "./upvc";
 import RAKDUCT from "./rakduct";
 import { BsBoxArrowInRight } from "react-icons/bs";
-import { PPR_FITTINGS, PPR_PIPES } from "./data";
+import { PEX_ADAPTERS, PEX_PIPES, PPR_FITTINGS, PPR_PIPES } from "./data";
 
 const AddOrder = ({ userData, status, setStatus }) => {
   const { userId } = userData;
@@ -106,7 +106,7 @@ const AddOrder = ({ userData, status, setStatus }) => {
 
   const handleClick = () => {
     // axios
-    //   .post("http://localhost:5000/api/products/ppr-pipes", PPR_PIPES)
+    //   .post("http://localhost:5000/api/products/pex-adapters", PEX_ADAPTERS)
     //   .then((res) => console.log(res));
   };
 

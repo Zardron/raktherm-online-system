@@ -95,28 +95,28 @@ const OrderList = ({ orderData, orderId, setOrderData }) => {
               >
                 {/* Item Name */}
                 <div className="w-full">
-                  <div className="text-left py-3 px-6 font-medium text-[#111827]">
+                  <div className="text-left py-3 px-6 font-medium text-[#111827] uppercase">
                     {data.itemName}
                   </div>
                 </div>
 
                 {/* Item Code */}
                 <div className="w-1/2">
-                  <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                  <div className="text-left py-3 px-6 text-xs text-[#6b7280] uppercase">
                     {data.itemCode}
                   </div>
                 </div>
 
                 {/* Quantity */}
                 <div className="w-1/2">
-                  <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                  <div className="text-left py-3 px-6 text-xs text-[#6b7280] uppercase">
                     {data.quantity}
                   </div>
                 </div>
 
                 {/* OEM */}
                 <div className="w-1/2">
-                  <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                  <div className="text-left py-3 px-6 text-xs text-[#6b7280] uppercase">
                     {data.oem}
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 import { TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { PEX_PIPES, PEX_PIPES_OPTIONS, PPR_PIPES_OPTIONS } from "../data";
+import { PEX_PIPES, PEX_PIPES_OPTIONS } from "../data";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ItemCode from "./ItemCode";
@@ -13,9 +13,23 @@ const Pipes = ({ orderId, setOrderData }) => {
     quantity: "",
   });
 
+  const [pexPipes, setPexPipes] = useState([]);
+  const [allData, setAllData] = useState([]);
   const { itemName, itemCode, quantity } = data;
 
-  const filter = PEX_PIPES?.filter((item) => item?.name === itemName);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/pex-pipes")
+      .then((res) => setPexPipes(res?.data));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/all-pex-pipes")
+      .then((res) => setAllData(res?.data));
+  }, []);
+
+  const filter = allData?.filter((item) => item?.name === itemName);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
@@ -73,7 +87,7 @@ const Pipes = ({ orderId, setOrderData }) => {
         className="flex items-center justify-center gap-4 mb-3"
       >
         <ItemName
-          options={PEX_PIPES_OPTIONS}
+          options={pexPipes}
           label="name"
           id="itemName"
           selectedVal={itemName}

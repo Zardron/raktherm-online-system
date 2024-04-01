@@ -8,10 +8,19 @@ import {
   getPprPipes,
   removePprFittings,
   removePprPipes,
-} from "../controllers/ProductController.js";
+} from "../controllers/PPRController.js";
+import {
+  addPexAdapters,
+  addPexPipes,
+  getAllPexAdapters,
+  getAllPexPipes,
+  getPexAdapters,
+  getPexPipes,
+} from "../controllers/PEXController.js";
 
 const router = express.Router();
 
+// PPR
 // PPR PIPES
 router.get("/all-ppr-pipes", getAllPprPipes);
 router.get("/ppr-pipes", getPprPipes);
@@ -23,5 +32,16 @@ router.get("/all-ppr-fittings", getAllPprFittings);
 router.get("/ppr-fittings", getPprFittings);
 router.post("/ppr-fittings", addPprFittings);
 router.post("/remove-ppr-fittings", removePprFittings);
+
+// PEX
+// PEX PIPES
+router.get("/all-pex-pipes", getAllPexPipes);
+router.get("/pex-pipes", getPexPipes);
+router.post("/pex-pipes", addPexPipes);
+
+// PPR FITTINGS
+router.get("/all-pex-adapters", getAllPexAdapters);
+router.get("/pex-adapters", getPexAdapters);
+router.post("/pex-adapters", addPexAdapters);
 
 export default router;
