@@ -132,7 +132,7 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
         />
       </div>
       <div
-        className={`border-r-2 border-l-2 border-b-2 overflow-hidden ease-linear duration-300 ${
+        className={`border-r-2 border-l-2 border-b-2 overflow-hidden ease-linear duration-200 ${
           openPipes ? "max-h-[600px] p-4" : "max-h-0"
         }`}
       >
@@ -204,11 +204,17 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
           ) : (
             <>
               {filter()?.map((data, index) => (
-                <div className="flex flex-row text-sm border-b-gray-100 border-b hover:bg-gray-50">
+                <div
+                  className="flex flex-row text-sm border-b-gray-100 border-b hover:bg-gray-50"
+                  key={index}
+                >
                   {/* Item Name */}
-                  <div className="w-full">
+                  <div className="w-full" key={data.name}>
                     {data?.items?.map((item) => (
-                      <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                      <div
+                        className="text-left py-3 px-6 text-xs text-[#6b7280]"
+                        key={item.ItemCode}
+                      >
                         {data.name}
                       </div>
                     ))}
@@ -218,7 +224,10 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
 
                   <div className="w-full">
                     {data?.items?.map((item) => (
-                      <div className="text-left py-3 px-6 text-xs text-[#6b7280]">
+                      <div
+                        className="text-left py-3 px-6 text-xs text-[#6b7280]"
+                        key={item.itemCode}
+                      >
                         {item.itemCode}
                       </div>
                     ))}
@@ -227,7 +236,10 @@ const Pipes = ({ openPipes, setOpenPipes, setOpenFittings, type }) => {
                   {/* OEM */}
                   <div className="w-1/2">
                     {data?.items?.map((item) => (
-                      <div className="flex items-center justify-end text-left py-3 px-6 text-xs text-[#6b7280] pr-10">
+                      <div
+                        className="flex items-center justify-end text-left py-3 px-6 text-xs text-[#6b7280] pr-10"
+                        key={item.ItemCode}
+                      >
                         <TiDelete
                           size={16}
                           title="Remove"

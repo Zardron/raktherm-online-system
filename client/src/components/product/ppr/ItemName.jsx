@@ -30,7 +30,7 @@ const ItemName = ({ options, label, id, selectedVal, handleChange }) => {
 
   const filter = (options) => {
     return options.filter(
-      (option) => option[label].toLowerCase().indexOf(query.toLowerCase()) > -1
+      (option) => option[label]?.toLowerCase().indexOf(query.toLowerCase()) > -1
     );
   };
 

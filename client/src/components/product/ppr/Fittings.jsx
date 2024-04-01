@@ -2,21 +2,116 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import axios from "axios";
 import { TiDelete } from "react-icons/ti";
+import ItemName from "./ItemName";
+import ItemCode from "./ItemCode";
+import { toast } from "react-toastify";
 
-const Fittings = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
+const Pipes = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
   const [query, setQuery] = useState("");
-  const [pipeData, setPipeData] = useState([]);
+  const [fittingsData, setFittingsData] = useState([]);
+
+  const [data, setData] = useState({
+    itemName: "",
+    itemCode: "",
+  });
+  const [pprFittings, setPprFittings] = useState([]);
+
+  const { itemName, itemCode } = data;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products/ppr-fittings")
+      .then((res) => setPprFittings(res?.data));
+  }, []);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/products/all-ppr-fittings")
-      .then((res) => setPipeData(res?.data));
+      .then((res) => setFittingsData(res?.data));
   }, [type]);
 
   const filter = () => {
-    return pipeData.filter(
+    return fittingsData.filter(
       (item) => item?.name?.toLowerCase().indexOf(query.toLowerCase()) > -1
     );
+  };
+
+  const filterItemCode = fittingsData?.filter(
+    (item) => item?.name === itemName
+  );
+  const [itemCodeOption, setItemCodeOption] = useState([]);
+
+  useEffect(() => {
+    setItemCodeOption(filterItemCode[0]?.items);
+  }, [itemName]);
+
+  const handleAddFittings = () => {
+    if (!itemName && !itemCode) {
+      return toast.error("All field is required!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+
+    axios
+      .post("http://localhost:5000/api/products/ppr-fittings", data)
+      .then((res) => {
+        if (res) {
+          axios
+            .get("http://localhost:5000/api/products/all-ppr-fittings")
+            .then((res) => setFittingsData(res?.data));
+
+          toast.success("New product has been added", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
+
+  const handleRemovePipe = (name, code) => {
+    axios
+      .post("http://localhost:5000/api/products/remove-ppr-pipes", {
+        itemName: name,
+        itemCode: code,
+      })
+      .then((res) => {
+        setFittingsData(res?.data);
+        toast.success("Product has been removed", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
   };
 
   return (
@@ -39,28 +134,39 @@ const Fittings = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
         />
       </div>
       <div
-        className={`border-r-2 border-l-2 border-b-2 overflow-hidden ease-linear duration-300 ${
-          openFittings ? "max-h-[480px] p-4" : "max-h-0"
+        className={`border-r-2 border-l-2 border-b-2 overflow-hidden ease-linear duration-200 ${
+          openFittings ? "max-h-[600px] p-4" : "max-h-0"
         }`}
       >
         <div className="flex items-center justify-between gap-4">
-          <input
-            placeholder="Item Name"
-            className="w-full px-4 py-2 rounded-md border-2 focus:outline-none"
+          <ItemName
+            options={pprFittings}
+            label="name"
+            id="itemName"
+            selectedVal={itemName}
+            handleChange={(val) => {
+              setData({ ...data, itemName: val });
+            }}
           />
 
-          <input
-            placeholder="Item Code"
-            className="w-full px-4 py-2 rounded-md border-2 focus:outline-none"
+          <ItemCode
+            options={itemCodeOption}
+            label="name"
+            id="itemCode"
+            selectedVal={itemCode}
+            handleChange={(val) => setData({ ...data, itemCode: val })}
           />
 
-          <button className="px-4 py-1 bg-green-500 border-2 border-green-500 rounded-md text-2xl text-white hover:border-green-500 hover:bg-white hover:text-black">
+          <button
+            className="px-4 py-1 bg-green-500 border-2 border-green-500 rounded-md text-2xl text-white hover:border-green-500 hover:bg-white hover:text-black"
+            onClick={handleAddFittings}
+          >
             +
           </button>
         </div>
 
         <div className="flex items-center justify-between bg-gray-200/75 mt-4 p-2 px-4 border-b border-white">
-          <h1 className="text-2xl pl-2 font-bold">FITTINGS LIST</h1>
+          <h1 className="text-2xl pl-2 font-bold">PIPES LIST</h1>
           <input
             placeholder="Search Item Name"
             className="px-4 py-2 rounded-md border-2 focus:outline-none placeholder:text-gray-400"
@@ -93,7 +199,7 @@ const Fittings = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
         </div>
         {/* End */}
         <div className="h-[350px] max-h-[350px] overflow-auto">
-          {pipeData?.length === 0 ? (
+          {fittingsData?.length === 0 ? (
             <div className="flex items-center justify-center w-full h-full text-2xl">
               -- No data available --
             </div>
@@ -129,7 +235,9 @@ const Fittings = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
                           title="Remove"
                           color="red"
                           className="cursor-pointer"
-                          onClick={() => console.log(data.name, item.itemCode)}
+                          onClick={() =>
+                            handleRemovePipe(data.name, item.itemCode)
+                          }
                         />
                       </div>
                     ))}
@@ -146,4 +254,4 @@ const Fittings = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
   );
 };
 
-export default Fittings;
+export default Pipes;

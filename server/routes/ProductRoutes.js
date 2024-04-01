@@ -4,7 +4,9 @@ import {
   addPprPipes,
   getAllPprFittings,
   getAllPprPipes,
+  getPprFittings,
   getPprPipes,
+  removePprFittings,
   removePprPipes,
 } from "../controllers/ProductController.js";
 
@@ -18,7 +20,8 @@ router.post("/remove-ppr-pipes", removePprPipes);
 
 // PPR FITTINGS
 router.get("/all-ppr-fittings", getAllPprFittings);
-router.get("/ppr-fittings", getPprPipes);
+router.get("/ppr-fittings", getPprFittings);
 router.post("/ppr-fittings", addPprFittings);
+router.post("/remove-ppr-fittings", removePprFittings);
 
 export default router;

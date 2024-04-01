@@ -6,7 +6,7 @@ const index = ({ type }) => {
   const [openPipes, setOpenPipes] = useState(true);
   const [openFittings, setOpenFittings] = useState(false);
 
-  const pipeProps = {
+  const props = {
     openPipes,
     setOpenPipes,
     openFittings,
@@ -16,9 +16,9 @@ const index = ({ type }) => {
 
   return (
     <>
-      <Pipes {...pipeProps} />
+      <Pipes {...props} />
       <hr className="my-5" />
-      <Fittings {...pipeProps} />
+      <Fittings {...props} />
     </>
   );
 };

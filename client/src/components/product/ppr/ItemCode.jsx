@@ -60,7 +60,11 @@ const ItemCode = ({ options, label, id, selectedVal, handleChange }) => {
       <div className={`options ${isOpen ? "open" : ""}`}>
         {filter(options)?.map((option, index) => {
           return (
-            <div onClick={() => selectOption(option)} className={`option }`}>
+            <div
+              onClick={() => selectOption(option)}
+              className={`option }`}
+              key={index}
+            >
               {option.itemCode}
             </div>
           );
