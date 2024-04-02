@@ -95,7 +95,7 @@ const Pipes = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
 
   const handleRemovePipe = (name, code) => {
     axios
-      .post("http://localhost:5000/api/products/remove-ppr-pipes", {
+      .post("http://localhost:5000/api/products/remove-ppr-fittings", {
         itemName: name,
         itemCode: code,
       })
@@ -123,7 +123,7 @@ const Pipes = ({ openFittings, setOpenFittings, setOpenPipes, type }) => {
           setOpenPipes(false);
         }}
       >
-        <h1 className="text-2xl">Fittings</h1>
+        <h1 className="text-2xl">FITTINGS</h1>
         <MdOutlineKeyboardArrowDown
           className={`${
             openFittings

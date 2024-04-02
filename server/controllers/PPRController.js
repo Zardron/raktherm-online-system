@@ -147,6 +147,8 @@ export const addPprFittings = async (req, res) => {
 export const removePprFittings = async (req, res) => {
   const { itemName, itemCode } = req.body;
 
+  console.log(itemName, itemCode);
+
   const removePprPipes = await PPR_Fittings.findOneAndUpdate(
     { name: itemName },
     {
